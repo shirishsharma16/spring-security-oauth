@@ -26,8 +26,17 @@ public class TokenRevocationLiveTest {
         assertThat(resourceServerResponse.getStatusCode(), equalTo(200));
     }
 
-    //
+    @Test
+    public void refreshAccessToken_callAPI_thenCorrect() {
+    	   final Response authServerResponse = obtainAccessToken("fooClientIdPassword", "john", "123");
+    	   final String refreshToken = authServerResponse.jsonPath().getString("refresh_token");
+    	   assertNotNull(refreshToken);
+    	   final String accessToken = obtainAccessTokenFromRefreshToken("fooClientIdPassword",refreshToken);
+    	   final Response resourceServerResponse = RestAssured.given().header("Authorization", "Bearer " + accessToken).get("http://localhost:8082/spring-security-oauth-resource/foos/100");
+           assertThat(resourceServerResponse.getStatusCode(), equalTo(200));
+    }
 
+    //
     private Response obtainAccessToken(String clientId, String username, String password) {
         final Map<String, String> params = new HashMap<String, String>();
         params.put("grant_type", "password");
@@ -39,6 +48,11 @@ public class TokenRevocationLiveTest {
         // response.jsonPath().getString("access_token")
     }
 
+    private String obtainAccessTokenFromRefreshToken(String clientId, final String refreshToken) {
+    	return obtainRefreshToken( clientId,   refreshToken);
+    }
+    
+    //TODO: name of this method should change to "obtainAccessTokenFromRefreshToken"
     private String obtainRefreshToken(String clientId, final String refreshToken) {
         final Map<String, String> params = new HashMap<String, String>();
         params.put("grant_type", "refresh_token");
