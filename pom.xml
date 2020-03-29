@@ -77,8 +77,9 @@
 
 
 	<modules>
-		<module>oauth-resource-server-2</module>
-		<module>oauth-resource-server-1</module>
+		<module>oauth-resource-server-legacy-2</module>
+		<module>oauth-resource-server-legacy-1</module>
+		<module>oauth-resource-server</module>
 
 		<module>clients-angularjs/oauth-ui-implicit</module>
 		<module>clients-angularjs/oauth-ui-password</module>
@@ -88,6 +89,7 @@
         <module>clients-SPA/oauth-resource-server-auth0</module>
 
 		<module>oauth-authorization-server</module>
+		<module>oauth-authorization-server-legacy</module>
         <module>oauth-zuul-gateway</module>
 		
 		<module>oauth-jws-jwk\oauth-authorization-server-jws-jwk</module>

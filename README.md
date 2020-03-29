@@ -16,18 +16,21 @@ mvn clean install
 
 ## Projects/Modules
 This project contains a number of modules, but here are the main ones you should focus on and run: 
-- `oauth-authorization-server` - the Authorization Server (port = 8081)
-- `oauth-resource-server-1` - the Resource Server (port = 8082)
-- `oauth-resource-server-2` - the secondary Resource Server (port = 8088)
+- `oauth-authorization-server` - the Keycloak based Authorization Server (port = 8083)
+- `oauth-resource-server` - the Resource Server based on new stack (port = 8081)
+- `oauth-authorization-server-legacy` - the Spring based Authorization Server (port = 8081)
+- `oauth-resource-server-legacy-1` - the Resource Server based on old stack (port = 8082)
+- `oauth-resource-server-legacy-2` - the secondary Resource Server based on old stack (port = 8088)
 
 And, depending on what grant type you want to try out, you'll work with one of these UI/Clients:  
 - `angularjs/oauth-ui-implicit` (port = 8083)
 - `angularjs/oauth-ui-password` (port = 8084)
 
 Other Modules: 
-- `clients-angular/oauth-ui-implicit-angular` - another version of the Implicit Grant UI Module - using Angular 7
-- `clients-angular/oauth-ui-password-angular` - another version of the Password Grant UI Module - using Angular 7
-- `clients-angular/oauth-ui-authorization-code-angular` - Authorization Code Grant UI Module - using Angular 7
+- `clients-angular/oauth-ui-authorization-code-angular` - Authorization Code Grant UI Module - using Angular 7, hitting the new resource server
+- `clients-angular/oauth-ui-authorization-code-angular-legacy` - Authorization Code Grant UI Module - using Angular 7, hitting the old resource server
+- `clients-angular/oauth-ui-implicit-angular-legacy` - another version of the Implicit Grant UI Module - using Angular 7, hitting the old resource server
+- `clients-angular/oauth-ui-password-angular-legacy` - another version of the Password Grant UI Module - using Angular 7, hitting the old resource server
 
 Finally, you can ignore all other modules. 
 
@@ -96,7 +99,13 @@ In this page, we can:
   * Remove resources (we actually can't accomplish this task, because the resource server requires the application to have permissions that were not included in the existing scopes)
 
 ## Relevant Articles: 
+
+### Using Spring Security 5
 - [Spring REST API + OAuth2 + Angular](https://www.baeldung.com/rest-api-spring-oauth2-angular)
+- [Keycloak Embedded in a Spring Boot Application](https://www.baeldung.com/keycloak-embedded-in-spring-boot-app)
+
+### Using the Spring Security OAuth legacy project
+- [Spring REST API + OAuth2 + Angular (using the Spring Security OAuth legacy stack)](https://www.baeldung.com/rest-api-spring-oauth2-angular-legacy)
 - [Using JWT with Spring Security OAuth](http://www.baeldung.com/spring-security-oauth-jwt)
 - [OAuth2 for a Spring REST API – Handle the Refresh Token in AngularJS](http://www.baeldung.com/spring-security-oauth2-refresh-token-angular-js)
 - [Spring Security OAuth2 – Simple Token Revocation](http://www.baeldung.com/spring-security-oauth-revoke-tokens)
