@@ -1,6 +1,8 @@
 package com.baeldung.newstack.spring;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.AuthoritiesExtractor;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,6 +16,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
+import com.baeldung.newstack.CustomAuthorityBuilder;
 import com.baeldung.newstack.UsernameClaimValidator;
 import com.nimbusds.jwt.proc.JWTClaimsSetVerifier;
 
@@ -30,6 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAuthority("SCOPE_read")
               .antMatchers(HttpMethod.POST, "/api/projects")
                 .hasAuthority("SCOPE_write")
+               .antMatchers("/check")
+                .hasAuthority("SCOPE_SUPERUSER")
               .anyRequest()
                 .authenticated()
             .and()
@@ -49,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         OAuth2TokenValidator<Jwt> withAudience = new DelegatingOAuth2TokenValidator<>(withIssuer, getCustomJwtClaimVerifier());
 
         jwtDecoder.setJwtValidator(withAudience);
-
+        jwtDecoder.setClaimSetConverter(new CustomAuthorityBuilder());
         return jwtDecoder;
     }
    
@@ -57,5 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public OAuth2TokenValidator<Jwt> getCustomJwtClaimVerifier() {
         return new UsernameClaimValidator();
     }
+    
 
 }

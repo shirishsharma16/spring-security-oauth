@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.baeldung.newstack.persistence.model.Project;
 import com.baeldung.newstack.service.IProjectService;
+import com.baeldung.newstack.web.dto.CheckDto;
 import com.baeldung.newstack.web.dto.ProjectDto;
 
 @RestController
@@ -30,6 +31,8 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
+  
+    
     @GetMapping(value = "/{id}")
     public ProjectDto findOne(@PathVariable Long id) {
         Project entity = projectService.findById(id)
